@@ -150,3 +150,79 @@ main {
     transform: scale(1.07); /* Плавное увеличение на 7% к концу 5-й секунды */
   }
 }
+
+/* ==========================================
+   СТИЛИ ДЛЯ СТРАНИЦЫ СВЕЧЕЙ (КОМПАКТНЫЙ ВАРИАНТ)
+   ========================================== */
+.catalog-section {
+  max-width: 900px;          /* Уменьшили общую ширину каталога с 1200px до 900px */
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: Arial, sans-serif;
+}
+
+.catalog-title {
+  text-align: center;
+  font-size: 28px;           /* Сделали заголовок чуть компактнее */
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.catalog-subtitle {
+  text-align: center;
+  font-size: 15px;
+  color: #777;
+  max-width: 500px;
+  margin: 0 auto 35px auto;
+  line-height: 1.5;
+}
+
+/* Сетка для карточек */
+.product-grid {
+  display: flex;
+  justify-content: center;   /* Центрируем карточки на странице */
+  gap: 20px;                 /* Немного уменьшили расстояние между ними */
+}
+
+/* Карточка товара */
+.product-card {
+  flex: 0 1 280px;           /* ТЕПЕРЬ У КАРТОЧЕК ФИКСИРОВАННАЯ ШИРИНА: строго 280px */
+  background-color: #fcfcfc;     
+  border-radius: 8px;
+  overflow: hidden;              
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04); 
+  border: 1px solid #eee;
+}
+
+/* Ограничиваем фотографии свечей */
+.product-img-box img {
+  width: 100%;
+  height: 240px;             /* УМЕНЬШИЛИ ВЫСОТУ КАРТИНКИ: теперь они аккуратные и небольшие */
+  object-fit: cover;         /* Фото красиво заполняет блок, лишнее обрезается */
+  display: block;
+}
+
+/* Блок текста внутри карточки */
+.product-info {
+  padding: 15px;             /* Сделали внутренние отступы компактнее */
+}
+
+.product-info h3 {
+  font-size: 16px;           /* Чуть уменьшили шрифт заголовка товара */
+  margin: 0 0 8px 0;
+  color: #333;
+}
+
+.product-info p {
+  font-size: 13px;           /* Чуть уменьшили текст описания */
+  color: #666;
+  line-height: 1.4;
+  margin: 0 0 12px 0;
+}
+
+.product-info .price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  display: block;
+}
