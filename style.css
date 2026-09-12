@@ -1,80 +1,104 @@
-/* Стили для всей шапки */
+/* ==========================================
+   1. ОБЩИЕ СТИЛИ СТРАНИЦЫ И ФУТЕРА
+   ========================================== */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column; /* Выстраивает header -> main -> footer */
+}
+
+/* Главный контент работает как пружина и выталкивает футер вниз */
+main {
+  flex: 1 0 auto;
+}
+
+/* Стили для самого футера */
+.site-footer {
+  flex-shrink: 0;         /* Не дает футеру сжиматься */
+  background-color: #333; /* Тёмный красивый фон подвала */
+  color: #fff;
+  padding: 20px 0;
+}
+
+/* Прижимает копирайт внутри футера вправо */
+.footer-content {
+  display: flex;        
+  justify-content: flex-end;  
+  max-width: 1200px;            
+  margin: 0 auto;            
+  padding: 0 20px;           
+}
+
+.copyright {
+  font-size: 14px;
+  opacity: 0.8;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* ==========================================
+   2. ШАПКА И НАВИГАЦИЯ (МЕНЮ)
+   ========================================== */
 .header {
   display: flex;
   justify-content: space-between; /* Логотип слева, меню справа */
   align-items: center;            /* Выравнивание по вертикали */
   padding: 15px 30px;
-  background-color: white;         /* Тёмный фон шапки */
-  color: white;
+  background-color: white;         
 }
 
-/* Стили для логотипа */
+/* Стили для картинки-логотипа */
 .logo {
-  width: 150px;     /* Укажите нужную ширину логотипа в пикселях */
-  height: auto;     /* Высота подстроится автоматически, чтобы сохранить пропорции */
-  display: block;   /* Убирает лишний микро-отступ под картинкой */
+  width: 200px;     
+  height: auto;     
+  display: block;   
 }
 
-/* Находим тег ul внутри класса .main-nav */
 .main-nav ul {
-  display: flex;       /* Выстраивает пункты в ряд */
-  list-style: none;    /* Убирает маркеры-точки */
+  display: flex;       /* Ссылки в один ряд */
+  list-style: none;    
   margin: 0;
   padding: 0;
 }
 
-/* Добавляем расстояние между пунктами меню */
 .main-nav li {
-  margin-left: 20px;   /* Отступ слева для каждого пункта */
+  margin-left: 20px;   /* Расстояние между ссылками */
 }
 
-/* Стили для красивого вида самих ссылок */
 .main-nav a {
-  text-decoration: none; /* Убирает нижнее подчеркивание */
-  color: #333;           /* Цвет текста (поменяйте на свой) */
+  text-decoration: none; 
+  color: #333;           
   font-family: Arial, sans-serif;
+  font-weight: 500;
 }
 
-/* Эффект при наведении курсора */
 .main-nav a:hover {
-  color: #ff9900;                 /* Цвет ссылки при наведении */
+  color: #ff9900;       /* Цвет при наведении */
 }
 
-/* Общий контейнер выстраивает внутренние блоки в ряд */
+/* ==========================================
+   3. БЛОК С ТЕКСТОМ И СЛАЙДШОУ
+   ========================================== */
 .promo-block {
   display: flex;
-  align-items: center;       /* Выравнивает текст и слайдер по центру по вертикали */
-  justify-content: space-between; /* Распределяет пространство между ними */
-  max-width: 1200px;         /* Максимальная ширина всей секции на сайте */
-  margin: 40px auto;         /* Центрирует всю секцию на странице и делает отступы сверху/снизу */
-  padding: 0 20px;           /* Небольшие отступы по бокам для экранов планшетов */
-  flex-direction: row-reverse;
+  align-items: center;       
+  justify-content: space-between; 
+  max-width: 1200px;         
+  margin: 40px auto;         
+  padding: 0 20px;           
+  flex-direction: row-reverse; /* Текст слева, слайдер справа */
 }
 
-/* 1. Ограничиваем общую ширину контейнера слайдера */
-.slideshow-container {
-  flex: 0 0 45%;             /* Уменьшаем долю слайдера (например, до 45% вместо 55%) */
-  max-width: 500px;          /* Жёсткий лимит: слайдер не станет шире 500px ни на каком мониторе */
-  margin: 0;
-  overflow: hidden;
-  border-radius: 8px;        /* По желанию: скруглит уголки у картинок */
-}
-
-/* 2. Управляем размером самих картинок внутри слайдов */
-.slide img {
-  width: 100%;               /* Картинка послушно займет ширину контейнера (макс. 500px) */
-  height: 350px;             /* Уменьшаем высоту! Поставьте 300px или 350px вместо 500px */
-  object-fit: cover;         /* Картинка по-прежнему красиво заполняет блок и не сжимается */
-  display: block;
-}
-
-/* Настройки для текстового блока (который теперь справа) */
 .promo-text {
-  flex: 0 0 40%;             /* Текст будет занимать 40% ширины (остальные 5% пойдут на зазор между ними) */
+  flex: 0 0 45%;             /* Текст забирает 45% ширины */
   font-family: Arial, sans-serif;
 }
 
-/* Стили для заголовка и текста (для красоты) */
 .promo-text h2 {
   font-size: 28px;
   margin-bottom: 15px;
@@ -88,17 +112,41 @@
   margin-bottom: 20px;
 }
 
-/* Симпатичная кнопочка под текстом */
-.promo-btn {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #333;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 4px;
-  transition: background-color 0.3s;
+/* Контейнер слайд-шоу */
+.slideshow-container {
+  flex: 0 0 45%;             /* Слайдер забирает 45% ширины */
+  max-width: 500px;          
+  margin: 0;
+  overflow: hidden;          /* Прячет картинку, когда она увеличивается */
+  border-radius: 8px;        
 }
 
-.promo-btn:hover {
-  background-color: #ff9900; /* Цвет кнопки при наведении */
+/* Управляем скрытием по умолчанию */
+.slide {
+  display: none;
+}
+
+/* Стили картинок внутри слайдов + АНИМАЦИЯ */
+.slide img {
+  width: 100%;               
+  height: 350px;             
+  object-fit: cover;         
+  display: block;
+  /* Подключаем эффект плавного увеличения на 5 секунд */
+  animation: zoomEffect 5s linear forwards; 
+}
+
+/* Ключевые кадры для эффекта увеличения картинок */
+@keyframes zoomEffect {
+  from {
+    opacity: 0.4;           /* Появление из легкой прозрачности */
+    transform: scale(1);    /* Обычный размер */
+  }
+  7% {
+    opacity: 1;             /* Картинка быстро становится полностью четкой */
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.07); /* Плавное увеличение на 7% к концу 5-й секунды */
+  }
 }
