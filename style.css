@@ -20,8 +20,8 @@ main {
 /* Стили для самого футера */
 .site-footer {
   flex-shrink: 0;         /* Не дает футеру сжиматься */
-  background-color: #333; /* Тёмный красивый фон подвала */
-  color: #fff;
+  background-color: white; /* Тёмный красивый фон подвала */
+  color: black;
   padding: 20px 0;
 }
 
@@ -29,7 +29,7 @@ main {
 .footer-content {
   display: flex;        
   justify-content: flex-end;  
-  max-width: 1200px;            
+  max-width: 100%;            
   margin: 0 auto;            
   padding: 0 20px;           
 }
@@ -42,21 +42,43 @@ main {
 }
 
 /* ==========================================
-   2. ШАПКА И НАВИГАЦИЯ (МЕНЮ)
+   2. ШАПКА И НАВИГАЦИЯ (МЕНЮ С АНИМАЦИЕЙ)
    ========================================== */
 .header {
   display: flex;
-  justify-content: space-between; /* Логотип слева, меню справа */
-  align-items: center;            /* Выравнивание по вертикали */
-  padding: 15px 30px;
-  background-color: white;         
+  justify-content: space-between; 
+  align-items: center;            
+  padding: 5px 30px;
+  background-color: white; 
+  
+  /* ДОБАВЛЯЕМ ПЛАВНОЕ ПОЯВЛЕНИЕ ШАПКИ ИЗ-ЗА ЭКРАНА СВЕРХУ */
+  animation: headerSlideDown 0.8s ease-out forwards;        
 }
 
-/* Стили для картинки-логотипа */
+/* Ключевые кадры для этой анимации (добавьте в самый конец файла) */
+@keyframes headerSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px); /* Смещаем шапку чуть вверх за край экрана */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);     /* Возвращаем на место */
+  }
+}
+
+
+/* Стили для картинки-логотипа + анимация */
 .logo {
   width: 200px;     
   height: auto;     
   display: block;   
+  transition: transform 0.3s ease; /* Плавность отклика логотипа */
+}
+
+/* Эффект легкого увеличения логотипа при наведении */
+.logo:hover {
+  transform: scale(1.03);          /* Увеличивается на 3% */
 }
 
 .main-nav ul {
@@ -70,19 +92,42 @@ main {
   margin-left: 20px;   /* Расстояние между ссылками */
 }
 
+/* Стили для самих ссылок и подготовка к анимации линии */
 .main-nav a {
   text-decoration: none; 
   color: #333;           
   font-family: Arial, sans-serif;
   font-weight: 500;
+  position: relative;              /* База для позиционирования линии */
+  padding-bottom: 6px;             /* Расстояние до будущей линии */
+  transition: color 0.3s ease;     /* Плавная смена цвета текста */
 }
 
+/* Создаем скрытую подчеркивающую линию, разъезжающуюся из центра */
+.main-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;                       /* Линия зарождается ровно по центру */
+  width: 0;                        /* Изначальная ширина — 0 */
+  height: 2px;                     /* Толщина линии */
+  background-color: #ff9900;       /* Фирменный цвет линии */
+  transition: width 0.3s ease, left 0.3s ease; /* Скорость анимации */
+}
+
+/* Эффект при наведении курсора на ссылку */
 .main-nav a:hover {
-  color: #ff9900;       /* Цвет при наведении */
+  color: #ff9900;                  /* Меняем цвет букв */
+}
+
+/* Магия активации линии при наведении */
+.main-nav a:hover::after {
+  width: 100%;                     /* Линия растягивается во всю ширину текста */
+  left: 0;                         /* Встает ровно по левому краю ссылки */
 }
 
 /* ==========================================
-   3. БЛОК С ТЕКСТОМ И СЛАЙДШОУ
+   3. БЛОК С ТЕКСТОМ И СЛАЙДШОУ НА ГЛАВНОЙ
    ========================================== */
 .promo-block {
   display: flex;
@@ -152,10 +197,11 @@ main {
 }
 
 /* ==========================================
-   СТИЛИ ДЛЯ СТРАНИЦЫ СВЕЧЕЙ (КОМПАКТНЫЙ ВАРИАНТ)
+   4. СТИЛИ ДЛЯ СЕТКИ СВЕЧЕЙ (5 В РЯД)
    ========================================== */
+/* 1. Расширяем контейнер, чтобы 5 карточек точно поместились */
 .catalog-section {
-  max-width: 900px;          /* Уменьшили общую ширину каталога с 1200px до 900px */
+  max-width: 1550px;         /* Увеличили с 1450px до 1550px */
   margin: 40px auto;
   padding: 0 20px;
   font-family: Arial, sans-serif;
@@ -163,7 +209,7 @@ main {
 
 .catalog-title {
   text-align: center;
-  font-size: 28px;           /* Сделали заголовок чуть компактнее */
+  font-size: 28px;
   color: #333;
   margin-bottom: 10px;
 }
@@ -177,51 +223,55 @@ main {
   line-height: 1.5;
 }
 
-/* Сетка для карточек */
+/* Сетка теперь железно делится на 5 равных колонок */
 .product-grid {
-  display: flex;
-  justify-content: center;   /* Центрируем карточки на странице */
-  gap: 20px;                 /* Немного уменьшили расстояние между ними */
+  display: grid;
+  /* МАГИЯ ТУТ: заставляет браузер сделать ровно 5 колонок одинаковой ширины */
+  grid-template-columns: repeat(5, 1fr); 
+  gap: 20px;                   /* Расстояние между карточками */
+  width: 100%;
 }
 
 /* Карточка товара */
 .product-card {
-  flex: 0 1 280px;           /* ТЕПЕРЬ У КАРТОЧЕК ФИКСИРОВАННАЯ ШИРИНА: строго 280px */
+  /* Убираем flex-свойства, они больше не нужны */
   background-color: #fcfcfc;     
   border-radius: 8px;
   overflow: hidden;              
   box-shadow: 0 4px 10px rgba(0,0,0,0.04); 
   border: 1px solid #eee;
+  display: flex;
+  flex-direction: column;      /* Чтобы контент внутри карточки шел сверху вниз */
 }
 
-/* Ограничиваем фотографии свечей */
+/* Фотографии свечей */
 .product-img-box img {
   width: 100%;
-  height: 240px;             /* УМЕНЬШИЛИ ВЫСОТУ КАРТИНКИ: теперь они аккуратные и небольшие */
-  object-fit: cover;         /* Фото красиво заполняет блок, лишнее обрезается */
+  height: 220px;               /* Фиксированная пропорциональная высота картинок */
+  object-fit: cover;         
   display: block;
 }
 
 /* Блок текста внутри карточки */
 .product-info {
-  padding: 15px;             /* Сделали внутренние отступы компактнее */
+  padding: 15px;
 }
 
 .product-info h3 {
-  font-size: 16px;           /* Чуть уменьшили шрифт заголовка товара */
+  font-size: 15px;           
   margin: 0 0 8px 0;
   color: #333;
 }
 
 .product-info p {
-  font-size: 13px;           /* Чуть уменьшили текст описания */
+  font-size: 12px;           
   color: #666;
   line-height: 1.4;
   margin: 0 0 12px 0;
 }
 
 .product-info .price {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
   color: #333;
   display: block;
