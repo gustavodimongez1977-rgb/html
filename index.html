@@ -19,5 +19,53 @@
   </nav>
   </header>
 
+  <!-- Общий контейнер для слайдера и текста -->
+<section class="promo-block">
+
+  <!-- ЛЕВАЯ ЧАСТЬ: Слайд-шоу (код остается прежним) -->
+  <div class="slideshow-container">
+    <div class="slide fade">
+      <img src="images/IMG_0552.jpg" alt="#">
+    </div>
+    <div class="slide fade">
+      <img src="images/IMG_0562.jpg" alt="#">
+    </div>
+    <div class="slide fade">
+      <img src="images/IMG_3838.jpg" alt="#">
+    </div>
+  </div>
+
+  <!-- ПРАВАЯ ЧАСТЬ: Блок для вашего текста -->
+  <div class="promo-text">
+    <h2>Уют для вашего дома</h2>
+    <p>Добро пожаловать в нашу мастерскую! Мы создаем ароматические свечи ручной работы и эстетичные постеры, которые добавят тепла и стиля вашему интерьеру.</p>
+    <a href="candles.html" class="promo-btn">Перейти в каталог</a>
+  </div>
+
+</section>
+
+<script>
+  let slideIndex = 0;
+  showSlides();
+
+  function showSlides() {
+    let slides = document.getElementsByClassName("slide");
+    
+    // Скрываем все слайды
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+    }
+    
+    // Переходим к следующему слайду
+    slideIndex++;
+    if (slideIndex > slides.length) { slideIndex = 1 }    
+    
+    // Показываем текущий слайд
+    slides[slideIndex - 1].style.display = "block";  
+    
+    // Запускаем таймер повтора: 10000 миллисекунд = 10 секунд
+    setTimeout(showSlides, 10000); 
+  }
+</script>
 </body>
 </html>

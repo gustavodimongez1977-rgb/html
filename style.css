@@ -39,3 +39,66 @@
 .main-nav a:hover {
   color: #ff9900;                 /* Цвет ссылки при наведении */
 }
+
+/* Общий контейнер выстраивает внутренние блоки в ряд */
+.promo-block {
+  display: flex;
+  align-items: center;       /* Выравнивает текст и слайдер по центру по вертикали */
+  justify-content: space-between; /* Распределяет пространство между ними */
+  max-width: 1200px;         /* Максимальная ширина всей секции на сайте */
+  margin: 40px auto;         /* Центрирует всю секцию на странице и делает отступы сверху/снизу */
+  padding: 0 20px;           /* Небольшие отступы по бокам для экранов планшетов */
+  flex-direction: row-reverse;
+}
+
+/* 1. Ограничиваем общую ширину контейнера слайдера */
+.slideshow-container {
+  flex: 0 0 45%;             /* Уменьшаем долю слайдера (например, до 45% вместо 55%) */
+  max-width: 500px;          /* Жёсткий лимит: слайдер не станет шире 500px ни на каком мониторе */
+  margin: 0;
+  overflow: hidden;
+  border-radius: 8px;        /* По желанию: скруглит уголки у картинок */
+}
+
+/* 2. Управляем размером самих картинок внутри слайдов */
+.slide img {
+  width: 100%;               /* Картинка послушно займет ширину контейнера (макс. 500px) */
+  height: 350px;             /* Уменьшаем высоту! Поставьте 300px или 350px вместо 500px */
+  object-fit: cover;         /* Картинка по-прежнему красиво заполняет блок и не сжимается */
+  display: block;
+}
+
+/* Настройки для текстового блока (который теперь справа) */
+.promo-text {
+  flex: 0 0 40%;             /* Текст будет занимать 40% ширины (остальные 5% пойдут на зазор между ними) */
+  font-family: Arial, sans-serif;
+}
+
+/* Стили для заголовка и текста (для красоты) */
+.promo-text h2 {
+  font-size: 28px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.promo-text p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Симпатичная кнопочка под текстом */
+.promo-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.promo-btn:hover {
+  background-color: #ff9900; /* Цвет кнопки при наведении */
+}
