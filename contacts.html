@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Контакты — DAXANIC</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+  <!-- ШАПКА -->
+  <header class="header">
+    <img src="images/Daxanic_v2.jpg" alt='Лого Daxanic' class="logo">
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">Главная</a></li>
+        <li><a href="candles.html">Свечи</a></li>
+        <li class="hidden-link"><a href="posters.html">Постеры</a></li>
+        <li><a href="contacts.html">Контакты</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ЦЕНТРАЛЬНАЯ ЧАСТЬ СТРАНИЦЫ -->
+  <main>
+    <section class="promo-block">
+      
+      <!-- ЛЕВАЯ ЧАСТЬ: Слайд-шоу (теперь идет первым в коде) -->
+      <div class="slideshow-container">
+        <div class="slide fade">
+          <img src="images/IMG_0552.jpg" alt="#">
+        </div>
+        <div class="slide fade">
+          <img src="images/IMG_0562.jpg" alt="#">
+        </div>
+        <div class="slide fade">
+          <img src="images/IMG_3838.jpg" alt="#">
+        </div>
+        <div class="slide fade">
+          <img src="images/Image_2025.jpeg" alt="#">
+        </div>
+        <div class="slide fade">
+          <img src="images/mage_2025.jpeg" alt="#">
+        </div>
+      </div> <!-- Слайдер корректно закрыт -->
+
+      <!-- ПРАВАЯ ЧАСТЬ: Текст и ссылки на контакты -->
+      <div class="promo-text">
+        <h2>Связаться с нами</h2>
+        <p>Если у вас появились вопросы по поводу продукции, сотрудничества или индивидуальных заказов, вы можете написать нам в любое удобное время.</p>
+        
+        <!-- Стилизованный блок с контактами -->
+        <div class="contacts-list">
+          <div class="contact-item">
+            <span class="contact-label">Telegram:</span>
+            <a href="https://t.me/daxanic" target="_blank" class="contact-link">@daxanic</a>
+          </div>
+          
+          <div class="contact-item">
+            <span class="contact-label">Email:</span>
+            <a href="mailto:daxanic@daxanic.com" class="contact-link">daxanic@daxanic.com</a>
+          </div>
+        </div>
+      </div> <!-- Блок текста корректно закрыт -->
+
+    </section>
+  </main>
+
+  <!-- ФУТЕР -->
+  <footer class="site-footer">
+<div class="custom-audio-player">
+  <!-- Сам аудиофайл скрыт -->
+  <audio id="bg-audio" src="audio/ваш_трек.mp3" loop></audio>
+  
+  <!-- Кастомная кнопка Play/Pause -->
+  <button id="audio-play-btn" class="player-btn">▶</button>
+  
+  <!-- Кастомный ползунок громкости -->
+  <div class="volume-container">
+    <span>🔊</span>
+    <input type="range" id="audio-volume" min="0" max="1" step="0.05" value="0.7">
+  </div>
+</div>
+    <div class="footer-content">
+      <p class="copyright">&copy; 2024 Торговая марка DAXANIC. Все права защищены.</p>
+    </div>
+  </footer>
+
+  <!-- СКРИПТ ДЛЯ РАБОТЫ СЛАЙДЕРА -->
+  <script>
+    let slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+      let slides = document.getElementsByClassName("slide");
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) {slideIndex = 1}    
+      slides[slideIndex-1].style.display = "block";  
+      setTimeout(showSlides, 5000); // Смена картинки каждые 5 секунд
+    }
+  </script>
+
+<script>
+  const audio = document.getElementById('bg-audio');
+
+  // 1. Проверяем, сохранена ли секунда, на которой остановилась музыка в прошлый раз
+  if (localStorage.getItem('audioTime')) {
+    audio.currentTime = parseFloat(localStorage.getItem('audioTime'));
+  }
+
+  // 2. Проверяем, играла ли музыка до перехода на эту страницу
+  if (localStorage.getItem('audioPlaying') === 'true') {
+    // Современные браузеры требуют клика пользователя по сайту перед включением звука
+    document.addEventListener('click', () => {
+      audio.play();
+    }, { once: true });
+  }
+
+  // 3. Каждую секунду запоминаем текущее время воспроизведения
+  audio.addEventListener('timeupdate', () => {
+    localStorage.setItem('audioTime', audio.currentTime);
+  });
+
+  // 4. Запоминаем статус: играет трек или стоит на паузе
+  audio.addEventListener('play', () => {
+    localStorage.setItem('audioPlaying', 'true');
+  });
+
+  audio.addEventListener('pause', () => {
+    localStorage.setItem('audioPlaying', 'false');
+  });
+</script>
+
+<script>
+  const audio = document.getElementById('bg-audio');
+  const playBtn = document.getElementById('audio-play-btn');
+  const volumeSlider = document.getElementById('audio-volume');
+
+  // 1. Восстанавливаем позицию времени, громкость и статус проигрывания
+  if (localStorage.getItem('audioTime')) {
+    audio.currentTime = parseFloat(localStorage.getItem('audioTime'));
+  }
+  
+  if (localStorage.getItem('audioVolume')) {
+    const savedVolume = parseFloat(localStorage.getItem('audioVolume'));
+    audio.volume = savedVolume;
+    volumeSlider.value = savedVolume;
+  } else {
+    audio.volume = volumeSlider.value; // по умолчанию 0.7
+  }
+
+  if (localStorage.getItem('audioPlaying') === 'true') {
+    document.addEventListener('click', () => {
+      audio.play().then(() => {
+        playBtn.innerText = '||'; // Меняем иконку на паузу
+      }).catch(err => console.log("Автоплей заблокирован браузером"));
+    }, { once: true });
+  }
+
+  // 2. Логика кнопки Play/Pause
+  playBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+      playBtn.innerText = '||';
+      localStorage.setItem('audioPlaying', 'true');
+    } else {
+      audio.pause();
+      playBtn.innerText = '▶';
+      localStorage.setItem('audioPlaying', 'false');
+    }
+  });
+
+  // 3. Управление громкостью
+  volumeSlider.addEventListener('input', (e) => {
+    const volume = e.target.value;
+    audio.volume = volume;
+    localStorage.setItem('audioVolume', volume);
+  });
+
+  // 4. Постоянно сохраняем секунду воспроизведения в память
+  audio.addEventListener('timeupdate', () => {
+    localStorage.setItem('audioTime', audio.currentTime);
+  });
+</script>
+
+</body>
+</html>

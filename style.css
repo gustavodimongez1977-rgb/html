@@ -125,8 +125,13 @@ main {
   left: 0;                         /* Встает ровно по левому краю ссылки */
 }
 
+/* Временно скрываем ссылку на постеры */
+.hidden-link {
+  display: none !important;
+}
+
 /* ==========================================
-   3. БЛОК С ТЕКСТОМ И СЛАЙДШОУ НА ГЛАВНОЙ
+   3. БЛОК С ТЕКСТОМ И СЛАЙДШОУ НА СТРАНИЦАХ
    ========================================== */
 .promo-block {
   display: flex;
@@ -135,7 +140,7 @@ main {
   max-width: 1200px;         
   margin: 40px auto;         
   padding: 0 20px;           
-  flex-direction: row-reverse; /* Текст слева, слайдер справа */
+  flex-direction: row; /* ИСПРАВЛЕНО: Базовое расположение слева направо */
 }
 
 .promo-text {
@@ -196,7 +201,7 @@ main {
 }
 
 /* ==========================================
-   4. СТИЛИ ДЛЯ СЕТКИ СВЕЧЕЙ (ИСПРАВЛЕНО ДЛЯ АДАПТИВНОСТИ)
+   4. СТИЛИ ДЛЯ СЕКЦИИ СВЕЧЕЙ И КАТАЛОГА
    ========================================== */
 .catalog-section {
   max-width: 1200px;         /* Оптимальная ширина для 3-х колонок */
@@ -241,47 +246,41 @@ main {
 }
 
 /* --- ЭФФЕКТ СМЕНЫ КАРТИНКИ ПРИ НАВЕДЕНИИ --- */
-
-/* Настраиваем контейнер для картинок */
 .product-img-box {
   width: 100%;
-  height: 240px; /* Ваша текущая высота картинок */
-  position: relative; /* База для позиционирования второй картинки */
+  height: 240px; 
+  position: relative; 
   overflow: hidden;
 }
 
-/* Общие стили для обеих картинок */
 .product-img-box img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
   object-position: center 90%; 
-  position: absolute; /* Накладываем их ровно друг на друга */
+  position: absolute; 
   top: 0;
   left: 0;
-  transition: opacity 0.4s ease; /* Плавность исчезновения/появления в 0.4 секунды */
+  transition: opacity 0.4s ease; 
 }
 
-/* Первая картинка изначально полностью видима */
 .img-primary {
   opacity: 1;
-  z-index: 2; /* Сидит выше второй картинки */
+  z-index: 2; 
 }
 
-/* Вторая картинка изначально скрыта */
 .img-secondary {
   opacity: 0;
-  z-index: 1; /* Сидит под первой картинкой */
+  z-index: 1; 
 }
 
-/* МАГИЯ: при наведении на КАРТОЧКУ ТОВАРА меняем прозрачность */
 .product-card:hover .img-primary {
-  opacity: 0; /* Главная картинка плавно становится прозрачной */
+  opacity: 0; 
 }
 
 .product-card:hover .img-secondary {
-  opacity: 1; /* Вторая картинка плавно проявляется */
+  opacity: 1; 
 }
 
 /* Блок текста внутри карточки */
@@ -305,7 +304,6 @@ main {
   margin: 0 0 12px 0;
 }
 
-/* Выталкиваем цену в самый низ карточки, чтобы она была на одной линии у всех товаров */
 .product-info .price {
   font-size: 16px;
   font-weight: bold;
@@ -315,28 +313,61 @@ main {
 }
 
 /* ==========================================
-   СТИЛИ ДЛЯ МУЗЫКАЛЬНОГО ТРЕКА
+   5. СТИЛИ ДЛЯ СТРАНИЦЫ КОНТАКТОВ И МУЗЫКИ
    ========================================== */
+.contacts-list {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; 
+}
+
+.contact-item {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.contact-label {
+  font-weight: bold;
+  color: #333;
+  width: 100px; 
+}
+
+.contact-link {
+  color: #333;
+  text-decoration: none;
+  border-bottom: 1px dashed #ccc; 
+  transition: color 0.3s ease, border-color 0.3s ease;
+  padding-bottom: 2px;
+}
+
+.contact-link:hover {
+  color: #ff9900;
+  border-color: #ff9900;
+}
+
 .audio-box {
-  margin-top: 25px;            /* Отступ сверху от основного текста */
+  margin-top: 25px;            
   font-family: Arial, sans-serif;
 }
 
 .audio-title {
   font-size: 14px;
-  color: #777;                 /* Приглушенный серый цвет текста подсказки */
+  color: #777;                 
   margin-bottom: 8px;
-  font-style: italic;          /* Делает текст курсивным для эстетики */
+  font-style: italic;
 }
 
 .audio-box audio {
-  width: 100%;                 /* Плеер растянется по ширине текстового блока */
-  max-width: 300px;            /* Но не станет шире 300px, чтобы выглядеть аккуратно */
-  outline: none;               /* Убирает синюю рамку при клике */
+  width: 100%;                 
+  max-width: 300px;            
+  outline: none;               
 }
 
 /* ==========================================
-   5. МЕДИА-ЗАПРОСЫ (Адаптация под разные экраны)
+   6. МЕДИА-ЗАПРОСЫ И АДАПТИВНОСТЬ
    ========================================== */
 
 /* Для планшетов (ширина экрана от 768px): выстраиваем по 2 карточки в ряд */
@@ -346,7 +377,7 @@ main {
   }
 }
 
-/* Для компьютеров (ширина экрана от 992px): строго по 3 карточки в ряд */
+/* Для компьютеров (ширина экрана от 992px): по 3 карточки в ряд */
 @media (min-width: 992px) {
   .product-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -367,7 +398,7 @@ main {
   }
 
   .promo-block {
-    flex-direction: column;    /* Картинка и текст на главной встают в 1 ряд */
+    flex-direction: column;    /* Картинка и текст встают в 1 вертикальный ряд */
     gap: 20px;
   }
 
@@ -379,4 +410,77 @@ main {
   .footer-content {
     justify-content: center;   /* Копирайт по центру на смартфонах */
   }
+}
+
+/* ==========================================
+   КАСТОМНЫЙ МИНИ-АУДИОПЛЕЕР
+   ========================================== */
+.custom-audio-player {
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  background-color: #ffffff;
+  padding: 8px 15px;
+  border-radius: 30px;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+  font-family: Arial, sans-serif;
+}
+
+/* Кнопка Play/Pause */
+.player-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.player-btn:hover {
+  color: #ff9900; /* Ваш фирменный цвет */
+  transform: scale(1.1);
+}
+
+/* Контейнер громкости */
+.volume-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+/* Стилизация ползунка громкости */
+#audio-volume {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 70px;
+  height: 4px;
+  background: #e0e0e0;
+  border-radius: 2px;
+  outline: none;
+}
+
+#audio-volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ff9900; /* Цвет кружка под цвет ваших линий */
+  cursor: pointer;
+}
+
+#audio-volume::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ff9900;
+  cursor: pointer;
+  border: none;
 }

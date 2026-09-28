@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Page Title</title>
+  <title>Daxanic candles</title>
   <link rel="stylesheet" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -13,8 +13,8 @@
     <ul class="class-fixed-here"> <!-- Мы обратимся напрямую через вложенность, это надежнее -->
       <li><a href="index.html">Главная</a></li>
       <li><a href="candles.html">Свечи</a></li>
-      <li><a href="posters.html">Постеры</a></li>
-      <li><a href="contact.html">Контакты</a></li>
+      <li class="hidden-link"><a href="posters.html">Постеры</a></li>
+      <li><a href="contacts.html">Контакты</a></li>
     </ul>
   </nav>
   </nav>
@@ -41,25 +41,55 @@
     <div class="slide fade">
       <img src="images/mage_2025.jpeg" alt="#">
     </div>
-    <div class="audio-box">
-    <p class="audio-title">Включить уютную фоновую музыку:</p>
-    <!-- Атрибут controls выводит кнопки, а loop зацикливает трек -->
-    <audio src="music/track1.mp3" controls loop autoplay></audio>
-    </div>
+
   </div>
 
   <!-- ПРАВАЯ ЧАСТЬ: Блок для вашего текста -->
-  <div class="promo-text">
-    <h2>Уют для вашего дома</h2>
-    <p>Добро пожаловать в нашу мастерскую! Мы создаем ароматические свечи ручной работы и эстетичные постеры, которые добавят тепла и стиля вашему интерьеру.</p>
+<div class="promo-text">
+  <!-- Основной заголовок о бренде -->
+  <h2 class="promo-main-title">Магия ароматов от DAXANIC</h2>
+  
+  <p class="promo-description">
+    Каждая свеча бренда <strong>DAXANIC</strong> — это история, созданная вручную для того, чтобы наполнить ваше пространство теплом, уютом и гармонией. Мы верим, что детали формируют атмосферу, поэтому используем только премиальные ингредиенты: 100% натуральный кокосовый воск, который не выделяет вредных веществ при горении, и селективные ароматические отдушки. 
+  </p>
+  
+  <!-- Блок сотрудничества -->
+  <div class="b2b-partnership-box">
+    <h3 class="partnership-title">Открыты к долгосрочному партнерству</h3>
+    
+    <p class="partnership-intro">
+      Бренд <strong>DAXANIC</strong> активно растет, и мы приглашаем к сотрудничеству оптовых покупателей, дистрибьюторов, а также студии декора, концепт-сторы, шоурумы, спа-салоны и цветочные бутики для реализации нашей продукции.
+    </p>
+    
+    <!-- Список преимуществ -->
+    <ul class="partnership-advantages">
+      <li><strong>Гибкие условия:</strong> мы открыты для оптовых продаж и работы под реализацию.</li>
+      <li><strong>Эксклюзивность:</strong> ручная работа, лаконичный стильный дизайн и премиальное качество для ценителей эстетики.</li>
+      <li><strong>Индивидуальный подход:</strong> возможность брендирования и адаптации объемов под формат вашего бизнеса.</li>
+    </ul>
     
   </div>
+</div>
 
 </section>
 
 </main>
 
 <footer class="site-footer">
+<div class="custom-audio-player">
+  <!-- Сам аудиофайл скрыт -->
+  <audio id="bg-audio" src="audio/ваш_трек.mp3" loop></audio>
+  
+  <!-- Кастомная кнопка Play/Pause -->
+  <button id="audio-play-btn" class="player-btn">▶</button>
+  
+  <!-- Кастомный ползунок громкости -->
+  <div class="volume-container">
+    <span>🔊</span>
+    <input type="range" id="audio-volume" min="0" max="1" step="0.05" value="0.7">
+  </div>
+</div>
+
   <div class="footer-content">
     <!-- Левая часть: копирайт -->
     <p class="copyright">&copy; 2024 Торговая марка DAXANIC. Все права защищены.</p>
@@ -88,6 +118,89 @@
     // Запускаем таймер повтора: 10000 миллисекунд = 10 секунд
     setTimeout(showSlides, 5000); 
   }
+</script>
+
+<script>
+  const audio = document.getElementById('bg-audio');
+
+  // 1. Проверяем, сохранена ли секунда, на которой остановилась музыка в прошлый раз
+  if (localStorage.getItem('audioTime')) {
+    audio.currentTime = parseFloat(localStorage.getItem('audioTime'));
+  }
+
+  // 2. Проверяем, играла ли музыка до перехода на эту страницу
+  if (localStorage.getItem('audioPlaying') === 'true') {
+    // Современные браузеры требуют клика пользователя по сайту перед включением звука
+    document.addEventListener('click', () => {
+      audio.play();
+    }, { once: true });
+  }
+
+  // 3. Каждую секунду запоминаем текущее время воспроизведения
+  audio.addEventListener('timeupdate', () => {
+    localStorage.setItem('audioTime', audio.currentTime);
+  });
+
+  // 4. Запоминаем статус: играет трек или стоит на паузе
+  audio.addEventListener('play', () => {
+    localStorage.setItem('audioPlaying', 'true');
+  });
+
+  audio.addEventListener('pause', () => {
+    localStorage.setItem('audioPlaying', 'false');
+  });
+</script>
+
+<script>
+  const audio = document.getElementById('bg-audio');
+  const playBtn = document.getElementById('audio-play-btn');
+  const volumeSlider = document.getElementById('audio-volume');
+
+  // 1. Восстанавливаем позицию времени, громкость и статус проигрывания
+  if (localStorage.getItem('audioTime')) {
+    audio.currentTime = parseFloat(localStorage.getItem('audioTime'));
+  }
+  
+  if (localStorage.getItem('audioVolume')) {
+    const savedVolume = parseFloat(localStorage.getItem('audioVolume'));
+    audio.volume = savedVolume;
+    volumeSlider.value = savedVolume;
+  } else {
+    audio.volume = volumeSlider.value; // по умолчанию 0.7
+  }
+
+  if (localStorage.getItem('audioPlaying') === 'true') {
+    document.addEventListener('click', () => {
+      audio.play().then(() => {
+        playBtn.innerText = '||'; // Меняем иконку на паузу
+      }).catch(err => console.log("Автоплей заблокирован браузером"));
+    }, { once: true });
+  }
+
+  // 2. Логика кнопки Play/Pause
+  playBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+      playBtn.innerText = '||';
+      localStorage.setItem('audioPlaying', 'true');
+    } else {
+      audio.pause();
+      playBtn.innerText = '▶';
+      localStorage.setItem('audioPlaying', 'false');
+    }
+  });
+
+  // 3. Управление громкостью
+  volumeSlider.addEventListener('input', (e) => {
+    const volume = e.target.value;
+    audio.volume = volume;
+    localStorage.setItem('audioVolume', volume);
+  });
+
+  // 4. Постоянно сохраняем секунду воспроизведения в память
+  audio.addEventListener('timeupdate', () => {
+    localStorage.setItem('audioTime', audio.currentTime);
+  });
 </script>
 
 </body>
