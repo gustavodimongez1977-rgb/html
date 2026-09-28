@@ -55,7 +55,7 @@ main {
   animation: headerSlideDown 0.8s ease-out forwards;        
 }
 
-/* Ключевые кадры для этой анимации (добавьте в самый конец файла) */
+/* Ключевые кадры для этой анимации */
 @keyframes headerSlideDown {
   from {
     opacity: 0;
@@ -66,7 +66,6 @@ main {
     transform: translateY(0);     /* Возвращаем на место */
   }
 }
-
 
 /* Стили для картинки-логотипа + анимация */
 .logo {
@@ -197,11 +196,10 @@ main {
 }
 
 /* ==========================================
-   4. СТИЛИ ДЛЯ СЕТКИ СВЕЧЕЙ (5 В РЯД)
+   4. СТИЛИ ДЛЯ СЕТКИ СВЕЧЕЙ (ИСПРАВЛЕНО ДЛЯ АДАПТИВНОСТИ)
    ========================================== */
-/* 1. Расширяем контейнер, чтобы 5 карточек точно поместились */
 .catalog-section {
-  max-width: 1550px;         /* Увеличили с 1450px до 1550px */
+  max-width: 1200px;         /* Оптимальная ширина для 3-х колонок */
   margin: 40px auto;
   padding: 0 20px;
   font-family: Arial, sans-serif;
@@ -223,58 +221,97 @@ main {
   line-height: 1.5;
 }
 
-/* Сетка теперь железно делится на 5 равных колонок */
+/* По умолчанию (на смартфонах) карточки идут в 1 колонку */
 .product-grid {
   display: grid;
-  /* МАГИЯ ТУТ: заставляет браузер сделать ровно 5 колонок одинаковой ширины */
-  grid-template-columns: repeat(5, 1fr); 
-  gap: 20px;                   /* Расстояние между карточками */
+  grid-template-columns: 1fr; 
+  gap: 25px;                   /* Оптимальное расстояние между карточками */
   width: 100%;
 }
 
 /* Карточка товара */
 .product-card {
-  /* Убираем flex-свойства, они больше не нужны */
   background-color: #fcfcfc;     
   border-radius: 8px;
   overflow: hidden;              
   box-shadow: 0 4px 10px rgba(0,0,0,0.04); 
   border: 1px solid #eee;
   display: flex;
-  flex-direction: column;      /* Чтобы контент внутри карточки шел сверху вниз */
+  flex-direction: column;      /* Позволяет контенту тянуться равномерно */
 }
 
-/* Фотографии свечей */
+/* --- ЭФФЕКТ СМЕНЫ КАРТИНКИ ПРИ НАВЕДЕНИИ --- */
+
+/* Настраиваем контейнер для картинок */
+.product-img-box {
+  width: 100%;
+  height: 240px; /* Ваша текущая высота картинок */
+  position: relative; /* База для позиционирования второй картинки */
+  overflow: hidden;
+}
+
+/* Общие стили для обеих картинок */
 .product-img-box img {
   width: 100%;
-  height: 220px;               /* Фиксированная пропорциональная высота картинок */
-  object-fit: cover;         
+  height: 100%;
+  object-fit: cover;
   display: block;
+  object-position: center 90%; 
+  position: absolute; /* Накладываем их ровно друг на друга */
+  top: 0;
+  left: 0;
+  transition: opacity 0.4s ease; /* Плавность исчезновения/появления в 0.4 секунды */
+}
+
+/* Первая картинка изначально полностью видима */
+.img-primary {
+  opacity: 1;
+  z-index: 2; /* Сидит выше второй картинки */
+}
+
+/* Вторая картинка изначально скрыта */
+.img-secondary {
+  opacity: 0;
+  z-index: 1; /* Сидит под первой картинкой */
+}
+
+/* МАГИЯ: при наведении на КАРТОЧКУ ТОВАРА меняем прозрачность */
+.product-card:hover .img-primary {
+  opacity: 0; /* Главная картинка плавно становится прозрачной */
+}
+
+.product-card:hover .img-secondary {
+  opacity: 1; /* Вторая картинка плавно проявляется */
 }
 
 /* Блок текста внутри карточки */
 .product-info {
-  padding: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;                /* Выравнивает карточки по высоте */
 }
 
 .product-info h3 {
-  font-size: 15px;           
-  margin: 0 0 8px 0;
+  font-size: 16px;           
+  margin: 0 0 10px 0;
   color: #333;
 }
 
 .product-info p {
-  font-size: 12px;           
+  font-size: 13px;           
   color: #666;
-  line-height: 1.4;
+  line-height: 1.5;
   margin: 0 0 12px 0;
 }
 
+/* Выталкиваем цену в самый низ карточки, чтобы она была на одной линии у всех товаров */
 .product-info .price {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: bold;
   color: #333;
   display: block;
+  margin-top: auto;            
 }
 
 /* ==========================================
@@ -296,4 +333,50 @@ main {
   width: 100%;                 /* Плеер растянется по ширине текстового блока */
   max-width: 300px;            /* Но не станет шире 300px, чтобы выглядеть аккуратно */
   outline: none;               /* Убирает синюю рамку при клике */
+}
+
+/* ==========================================
+   5. МЕДИА-ЗАПРОСЫ (Адаптация под разные экраны)
+   ========================================== */
+
+/* Для планшетов (ширина экрана от 768px): выстраиваем по 2 карточки в ряд */
+@media (min-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Для компьютеров (ширина экрана от 992px): строго по 3 карточки в ряд */
+@media (min-width: 992px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Общая мобильная адаптация для шапки и промо-блока (экраны до 768px) */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;    /* Логотип и меню встают друг под друга */
+    gap: 15px;
+    padding: 15px;
+  }
+  
+  .main-nav li {
+    margin-left: 10px;         /* Уменьшаем отступы в меню на телефонах */
+    margin-right: 10px;
+  }
+
+  .promo-block {
+    flex-direction: column;    /* Картинка и текст на главной встают в 1 ряд */
+    gap: 20px;
+  }
+
+  .promo-text, .slideshow-container {
+    flex: 0 0 100%;            /* Блоки занимают всю ширину экрана телефона */
+    max-width: 100%;
+  }
+  
+  .footer-content {
+    justify-content: center;   /* Копирайт по центру на смартфонах */
+  }
 }
